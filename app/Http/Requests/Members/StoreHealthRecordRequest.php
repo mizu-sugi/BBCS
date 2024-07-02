@@ -22,14 +22,14 @@ class StoreHealthRecordRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'temperature' => [],
-            'nausea_level' => [],
-            'fatigue_level' =>[],
-            'pain_level' => [],
-            'appetite_level' => [],
-            'numbness_level' => [],
-            'anxiety_level' => [],
-            'memo' => [],
+            'temperature' => ['required', 'numeric'],
+            'nausea_level' => ['required', 'integer', 'between:1,5'],
+            'fatigue_level' => ['required', 'integer', 'between:1,5'],
+            'pain_level' => ['required', 'integer', 'between:1,5'],
+            'appetite_level' => ['required', 'integer', 'between:1,5'],
+            'numbness_level' => ['required', 'integer', 'between:1,5'],
+            'anxiety_level' => ['required', 'integer', 'between:1,5'],
+            'memo' => ['nullable', 'string'],
         ];
     }
 }
