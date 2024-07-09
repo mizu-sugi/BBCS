@@ -16,7 +16,7 @@
 <header>
     <div class="px-4 mx-auto bg-gray-800">
         <nav class="flex items-center justify-between py-6">
-            <a class="text-3xl font-semibold leading-none text-white" href="/">BBCA</a>
+            <a class="text-3xl font-semibold leading-none text-white" href="/">BBCS</a>
             <ul class="hidden lg:flex ml-auto mr-12 space-x-12">
                 <li><a class="text-sm text-blueGray-400 hover:text-blueGray-500" href="#"></a></li>
                 <li><a class="text-sm text-blueGray-400 hover:text-blueGray-500" href="#"></a></li>

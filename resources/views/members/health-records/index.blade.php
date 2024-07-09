@@ -3,6 +3,7 @@
 @section('content')
     <div class="w-full">
         <canvas id="temperature-chart" class="w-full h-96"></canvas>
+
     </div>
 
     <div class="grid grid-cols-3 gap-4 mt-8">
@@ -66,13 +67,17 @@
                     }]
                 },
                 options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true
-                        }
-                    }
-                }
+    scales: {
+        y: {
+            min: 35,
+            max: 40,
+            stepSize: 0.5
+        }
+    }
+}
             });
+
+            
 
             // 各項目の円グラフ
             const charts = ['nausea', 'fatigue', 'pain', 'appetite', 'numbness', 'anxiety'];
