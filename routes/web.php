@@ -6,6 +6,8 @@ use App\Http\Controllers\Admin\AdminBlogController;
 use App\Http\Controllers\Members\HealthRecordController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Members\MemberController;
+use App\Http\Controllers\Members\TweetController;
+
 
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\BlogController;
@@ -64,9 +66,10 @@ Route::middleware('auth:members')->group(function () {
     Route::get('/members/health-records/index', [HealthRecordController::class, 'index'])->name('members.health-records.index');
     Route::get('/members/health-records/create', [HealthRecordController::class, 'create'])->name('members.health-records.create');
     Route::post('/members/health-records', [HealthRecordController::class, 'store'])->name('members.health-records.store');
-    Route::get('/members/health-records/{healthRecord}/edit', [HealthRecordController::class, 'edit'])->name('members.health-records.edit');
+    //Route::get('/members/health-records/{healthRecord}/edit', [HealthRecordController::class, 'edit'])->name('members.health-records.edit');
     Route::put('/members/health-records/{healthRecord}', [HealthRecordController::class, 'update'])->name('members.health-records.update');
     Route::delete('/members/health-records/{healthRecord}', [HealthRecordController::class, 'destroy'])->name('members.health-records.destroy');
+    Route::get('/members/health-records/{id}/edit', 'HealthRecordController@edit')->name('health-records.edit');
 });
 
 
@@ -80,32 +83,28 @@ Route::get('/members/login', [MemberAuthController::class, 'showLoginForm'])->na
 Route::post('/members/login', [MemberAuthController::class, 'login']);
 Route::post('/members/logout', [MemberAuthController::class, 'logout'])->name('members.logout');
 
-//tinder
-Route::get('/members/tinder/index', [MemberController::class, 'index'])->name('members.tinder.index');
-Route::get('/members/{id}', [MemberController::class, 'show'])->name('members.show');
 
+//管理者のユーザー管理
 Route::get('/admin/users/management', [MemberController::class, 'management'])->name('admin.users.management');
 Route::get('/members/{id}', [MemberController::class, 'show'])->name('members.show');
 
 
-//掲示板
-Route::resource('/members/community-boards', MessageController::class);
-Route::resource('/members/community-boards.comments', CommentController::class)->shallow();
-Route::post('/members/community-boards/{message}/comments', [CommentController::class, 'store'])->name('comments.store');
+//community-boards
+Route::middleware('auth:members')->group(function () {
+    Route::get('/members/community-boards/index', [MessageController::class, 'index'])->name('members.community-boards.index');
+    Route::get('/members/community-boards/{message}', [MessageController::class, 'show'])->name('members.community-boards.show');
+    Route::get('/members/community-boards/create', [MessageController::class, 'create'])->name('members.community-boards.create');
+    Route::post('/members/community-boards', [MessageController::class, 'store'])->name('members.community-boards.store');
+    Route::get('/members/community-boards/{message}/edit', [MessageController::class, 'edit'])->name('members.community-boards.edit');
+    Route::put('/members/community-boards/{message}', [MessageController::class, 'update'])->name('members.community-boards.update');
+    Route::delete('/members/community-boards/{message}', [MessageController::class, 'destroy'])->name('members.community-boards.destroy');
 
+    // Comments routes
+    Route::post('/members/community-boards/{message}/comments', [CommentController::class, 'store'])->name('members.community-boards.comments.store');
+    Route::get('/members/community-boards/{message}/comments/{comment}/edit', [CommentController::class, 'edit'])->name('members.community-boards.comments.edit');
+    Route::put('/members/community-boards/{message}/comments/{comment}', [CommentController::class, 'update'])->name('members.community-boards.comments.update');
+    Route::delete('/members/community-boards/{message}/comments/{comment}', [CommentController::class, 'destroy'])->name('members.community-boards.comments.destroy');
+    Route::get('/members/community-boards/comments/index', [MessageController::class, 'index'])->name('members.community-boards.comments.index');
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+});
 
