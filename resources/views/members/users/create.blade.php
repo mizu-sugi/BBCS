@@ -79,55 +79,55 @@
                         <label class="block text-sm font-medium mb-2" for="current_treatment">治療方法</label>
                         <div class="block">
                             <label class="inline-flex items-center">
-                                <input type="checkbox" class="form-checkbox" name="treatment[]" value="just_diagnosed">
+                                <input type="checkbox" class="form-checkbox" name="current_treatment[]" value="just_diagnosed">
                                 <span class="ml-2">診断を受けたばかり</span>
                             </label>
                         </div>
                         <div class="block">
                             <label class="inline-flex items-center">
-                                <input type="checkbox" class="form-checkbox" name="treatment[]" value="surgery">
+                                <input type="checkbox" class="form-checkbox" name="current_treatment[]" value="surgery">
                                 <span class="ml-2">手術</span>
                             </label>
                         </div>
                         <div class="block">
                             <label class="inline-flex items-center">
-                                <input type="checkbox" class="form-checkbox" name="treatment[]" value="radiation_therapy">
+                                <input type="checkbox" class="form-checkbox" name="current_treatment[]" value="radiation_therapy">
                                 <span class="ml-2">放射線治療</span>
                             </label>
                         </div>
                         <div class="block">
                             <label class="inline-flex items-center">
-                                <input type="checkbox" class="form-checkbox" name="treatment[]" value="chemotherapy">
+                                <input type="checkbox" class="form-checkbox" name="current_treatment[]" value="chemotherapy">
                                 <span class="ml-2">化学療法</span>
                             </label>
                         </div>
                         <div class="block">
                             <label class="inline-flex items-center">
-                                <input type="checkbox" class="form-checkbox" name="treatment[]" value="targeted_therapy">
+                                <input type="checkbox" class="form-checkbox" name="current_treatment[]" value="targeted_therapy">
                                 <span class="ml-2">分子標的療法</span>
                             </label>
                         </div>
                         <div class="block">
                             <label class="inline-flex items-center">
-                                <input type="checkbox" class="form-checkbox" name="treatment[]" value="hormone_therapy">
+                                <input type="checkbox" class="form-checkbox" name="current_treatment[]" value="hormone_therapy">
                                 <span class="ml-2">ホルモン療法</span>
                             </label>
                         </div>
                         <div class="block">
                             <label class="inline-flex items-center">
-                                <input type="checkbox" class="form-checkbox" name="treatment[]" value="under_observation">
+                                <input type="checkbox" class="form-checkbox" name="current_treatment[]" value="under_observation">
                                 <span class="ml-2">経過観察中</span>
                             </label>
                         </div>
                         <div class="block">
                             <label class="inline-flex items-center">
-                                <input type="checkbox" class="form-checkbox" name="treatment[]" value="folk_remedies">
+                                <input type="checkbox" class="form-checkbox" name="current_treatment[]" value="folk_remedies">
                                 <span class="ml-2">民間療法</span>
                             </label>
                         </div>
                         <div class="block">
                             <label class="inline-flex items-center">
-                                <input type="checkbox" class="form-checkbox" name="treatment[]" value="others">
+                                <input type="checkbox" class="form-checkbox" name="current_treatment[]" value="others">
                                 <span class="ml-2">その他</span>
                             </label>
                         </div>

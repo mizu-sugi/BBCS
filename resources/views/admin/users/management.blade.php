@@ -10,7 +10,7 @@
                     <h4 class="text-lg font-semibold">{{ $member->name }}</h4>
                     <p class="text-sm text-gray-600">{{ $member->email }}</p>
                     @if($member->image)
-                        <img class="mt-2 w-16 h-16 rounded-full" src="{{ $member->image }}" alt="{{ $member->name }}">
+                        <img class="mt-2 w-16 h-16 rounded-full" src="{{ asset('storage/' . $member->image) }}" alt="{{ $member->name }}">
                     @else
                         <img class="mt-2 w-16 h-16 rounded-full" src="{{ asset('path/to/default/image.png') }}" alt="No image">
                     @endif

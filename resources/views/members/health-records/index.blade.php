@@ -1,9 +1,24 @@
 @extends('layouts.users')
 
 @section('content')
-    <div class="w-full">
+<div class="w-full">
+        <form method="GET" action="{{ route('members.health-records.index') }}" class="mb-4">
+            <div class="flex items-center">
+                <div class="mr-4">
+                    <label for="start_date" class="block text-gray-700 font-bold mb-2">開始日</label>
+                    <input type="date" id="start_date" name="start_date" value="{{ request('start_date') }}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                </div>
+                <div class="mr-4">
+                    <label for="end_date" class="block text-gray-700 font-bold mb-2">終了日</label>
+                    <input type="date" id="end_date" name="end_date" value="{{ request('end_date') }}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                </div>
+                <div class="mr-4 mt-6">
+                    <button type="submit" class="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">フィルタ</button>
+                </div>
+            </div>
+        </form>
+        
         <canvas id="temperature-chart" class="w-full h-96"></canvas>
-
     </div>
 
     <div class="grid grid-cols-3 gap-4 mt-8">
@@ -54,7 +69,7 @@
 
             // 折れ線グラフ（体温）
             const temperatureCtx = document.getElementById('temperature-chart').getContext('2d');
-            new Chart(temperatureCtx, {
+            const temperatureChart = new Chart(temperatureCtx, {
                 type: 'line',
                 data: {
                     labels: labels,
@@ -67,17 +82,15 @@
                     }]
                 },
                 options: {
-    scales: {
-        y: {
-            min: 35,
-            max: 40,
-            stepSize: 0.5
-        }
-    }
-}
+                    scales: {
+                        y: {
+                            min: 35,
+                            max: 40,
+                            stepSize: 0.5
+                        }
+                    }
+                }
             });
-
-            
 
             // 各項目の円グラフ
             const charts = ['nausea', 'fatigue', 'pain', 'appetite', 'numbness', 'anxiety'];
@@ -147,5 +160,17 @@
             });
         });
     </script>
-@endsection
 
+    <div class="mt-8">
+        <h2 class="text-xl font-bold mb-4">健康記録の一覧</h2>
+        <ul>
+            @foreach($records as $record)
+                <li class="mb-2">
+                    <a href="{{ route('members.health-records.show', $record->id) }}" class="text-blue-500 hover:underline">
+                        {{ $record->created_at->format('Y-m-d H:i:s') }} - 体温: {{ $record->temperature }}℃
+                    </a>
+                </li>
+            @endforeach
+        </ul>
+    </div>
+@endsection

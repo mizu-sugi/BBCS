@@ -2,7 +2,8 @@
 
 @section('content')
     <div class="w-full">
-        <canvas id="temperature-chart" class="w-full h-96"></canvas>
+    <canvas id="temperature-chart" class="w-full h-96" ></canvas>
+
     </div>
 
     <div class="grid grid-cols-3 gap-4 mt-8">
@@ -40,39 +41,43 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            const chartData = document.getElementById('chart-data');
+    const chartData = document.getElementById('chart-data');
 
-            const labels = JSON.parse(chartData.getAttribute('data-labels'));
-            const temperatures = JSON.parse(chartData.getAttribute('data-temperatures'));
-            const nauseaLevels = JSON.parse(chartData.getAttribute('data-nausea-levels'));
-            const fatigueLevels = JSON.parse(chartData.getAttribute('data-fatigue-levels'));
-            const painLevels = JSON.parse(chartData.getAttribute('data-pain-levels'));
-            const appetiteLevels = JSON.parse(chartData.getAttribute('data-appetite-levels'));
-            const numbnessLevels = JSON.parse(chartData.getAttribute('data-numbness-levels'));
-            const anxietyLevels = JSON.parse(chartData.getAttribute('data-anxiety-levels'));
+    const labels = JSON.parse(chartData.getAttribute('data-labels'));
+    const temperatures = JSON.parse(chartData.getAttribute('data-temperatures'));
+    const nauseaLevels = JSON.parse(chartData.getAttribute('data-nausea-levels'));
+    const fatigueLevels = JSON.parse(chartData.getAttribute('data-fatigue-levels'));
+    const painLevels = JSON.parse(chartData.getAttribute('data-pain-levels'));
+    const appetiteLevels = JSON.parse(chartData.getAttribute('data-appetite-levels'));
+    const numbnessLevels = JSON.parse(chartData.getAttribute('data-numbness-levels'));
+    const anxietyLevels = JSON.parse(chartData.getAttribute('data-anxiety-levels'));
 
-            // 折れ線グラフ（体温）
-            const temperatureCtx = document.getElementById('temperature-chart').getContext('2d');
-            new Chart(temperatureCtx, {
-                type: 'line',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: '体温',
-                        data: temperatures,
-                        borderColor: 'rgba(255, 99, 132, 1)',
-                        borderWidth: 1,
-                        fill: false
-                    }]
-                },
-                options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true
-                        }
-                    }
+    // 折れ線グラフ（体温）
+    const temperatureCtx = document.getElementById('temperature-chart').getContext('2d');
+    const temperatureChart = new Chart(temperatureCtx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: '体温',
+                data: temperatures,
+                borderColor: 'rgba(255, 99, 132, 1)',
+                borderWidth: 1,
+                fill: false
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    min: 35,
+                    max: 40,
+                    stepSize: 0.5
                 }
-            });
+            }
+        }
+    });
+
+
 
             // 各項目の円グラフ
             const charts = ['nausea', 'fatigue', 'pain', 'appetite', 'numbness', 'anxiety'];
@@ -142,4 +147,3 @@
             });
         });
     </script>
-@endsection
