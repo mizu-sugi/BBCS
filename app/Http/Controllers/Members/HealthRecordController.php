@@ -13,12 +13,27 @@ class HealthRecordController extends Controller
 {
     use \Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
-    public function index()
+    public function index(Request $request)
     {
+       
+        $query = HealthRecord::where('member_id', auth()->id());
 
+        if ($request->has('start_date') && $request->start_date) {
+            $query->whereDate('created_at', '>=', $request->start_date);
+        }
+    
+        if ($request->has('end_date') && $request->end_date) {
+            $query->whereDate('created_at', '<=', $request->end_date);
+        }
+    
+     
+
+
+          
+        $records = $query->get();
         
 
-        $records = HealthRecord::where('member_id', auth()->id())->get();
+        //$records = HealthRecord::where('member_id', auth()->id())->get();
 
 
         $labels = $records->pluck('created_at')->map(function ($date) {
@@ -32,7 +47,7 @@ class HealthRecordController extends Controller
         $numbnessLevels = $records->pluck('numbness_level')->toArray();
         $anxietyLevels = $records->pluck('anxiety_level')->toArray();
 
-        return view('members.health-records.index', compact('labels', 'temperatures', 'nauseaLevels', 'fatigueLevels', 'painLevels', 'appetiteLevels', 'numbnessLevels', 'anxietyLevels'));
+        return view('members.health-records.index', compact('records', 'labels', 'temperatures', 'nauseaLevels', 'fatigueLevels', 'painLevels', 'appetiteLevels', 'numbnessLevels', 'anxietyLevels'));
     }
 
     public function create()
@@ -67,6 +82,47 @@ class HealthRecordController extends Controller
 
     return redirect()->route('members.health-records.index')->with('success', 'Health record created successfully.');
 }
+
+    public function show($id)
+    {
+        $healthRecord = HealthRecord::findOrFail($id);
+        return view('members.health-records.show', compact('healthRecord'));
+    }
+
+//     public function edit($id)
+// {
+//     $healthRecord = HealthRecord::findOrFail($id);
+//     return view('members.health-records.edit', compact('healthRecord'));
+// }
+
+// public function update(Request $request, $id)
+// {
+//     $validatedData = $request->validate([
+//         'temperature' => 'required|numeric',
+//         'nausea_level' => 'required|integer|between:1,5',
+//         'fatigue_level' => 'required|integer|between:1,5',
+//         'pain_level' => 'required|integer|between:1,5',
+//         'appetite_level' => 'required|integer|between:1,5',
+//         'numbness_level' => 'required|integer|between:1,5',
+//         'anxiety_level' => 'required|integer|between:1,5',
+//         'memo' => 'nullable|string|max:1000',
+//     ]);
+
+//     $healthRecord = HealthRecord::findOrFail($id);
+//     $healthRecord->update($validatedData);
+
+//     return redirect()->route('members.health-records.show', $healthRecord->id)
+//                      ->with('success', '健康記録が更新されました');
+// }
+
+// public function destroy($id)
+// {
+//     $healthRecord = HealthRecord::findOrFail($id);
+//     $healthRecord->delete();
+
+//     return redirect()->route('members.health-records.index')
+//                      ->with('success', '健康記録が削除されました');
+// }
 
     public function edit($id)
     {

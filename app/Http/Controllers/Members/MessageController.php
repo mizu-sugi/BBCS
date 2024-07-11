@@ -6,15 +6,23 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Models\Message;
-use App\Models\Comment;
+
 
 
 class MessageController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $messages = Message::where('member_id', auth()->id())->get();
-        $messages = Message::all();
+        $query = $request->input('search');
+        $messages = Message::where('title', 'like', '%'.$query.'%')
+                            ->orWhere('content', 'like', '%'.$query.'%')
+                            ->orderBy('created_at', 'desc')
+                            ->get();
+    
+
+
+        // $messages = Message::where('member_id', auth()->id())->get();
+        // $messages = Message::all();
         return view('members.community-boards.index', compact('messages'));
     }
     
@@ -26,6 +34,7 @@ class MessageController extends Controller
     
      public function create()
      {
+       
          return view('members.community-boards.create');
      }
 

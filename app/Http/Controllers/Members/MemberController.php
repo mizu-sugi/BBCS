@@ -49,12 +49,18 @@ class MemberController extends Controller
             'password' => 'required|string|min:8|confirmed',
             'subtype' => 'required|in:hormone_positive_her2_negative,hormone_positive_her2_positive,hormone_negative_her2_positive,triple_negative',
             'stage' => 'required|in:stage0,stage1,stage2,stage3,stage4',
-            'treatment' => 'array',
+            'current_treatment' => ['required', 'array'],
+            'current_treatment.*' => ['string', 'in:just_diagnosed,surgery,radiation_therapy,chemotherapy,targeted_therapy,hormone_therapy,under_observation,folk_remedies,others'],
             'introduction' => 'nullable|string',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
         $validatedData['image'] = $request->file('image')->store('users', 'public');
         $validatedData['password'] = Hash::make($validatedData['password']);
+
+                // current_treatment を配列から文字列に変換
+    if (isset($validatedData['current_treatment']) && is_array($validatedData['current_treatment'])) {
+        $validatedData['current_treatment'] = implode(',', $validatedData['current_treatment']);
+    }
 
         Member::create($validatedData);
 
@@ -62,6 +68,13 @@ class MemberController extends Controller
     }
 
 
+    public function show($id)
+{
+    // メンバーの詳細を取得する処理
+    $member = Member::findOrFail($id);
+    
+    return view('members.show', compact('member'));
+}
 
     /**
      * Show the form for editing the specified resource.

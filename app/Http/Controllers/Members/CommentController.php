@@ -23,6 +23,8 @@ class CommentController extends Controller
         return back(); // メッセージの詳細ページにリダイレクトする
     }
 
+
+
     public function edit($messageId, $commentId)
     {
         $message = Message::findOrFail($messageId);

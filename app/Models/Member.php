@@ -23,8 +23,17 @@ class Member extends Authenticatable // Authenticatable インターフェース
         'introduction'
     ];
 
+    protected $casts = [
+        'current_treatment' => 'array',
+    ];
+
     public function healthRecords()
     {
     return $this->hasMany(HealthRecord::class);
+    }
+
+    public function messages()
+    {
+        return $this->hasMany(Message::class, 'member_id');
     }
 }

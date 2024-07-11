@@ -12,12 +12,12 @@ class Message extends Model
     protected $fillable = [
         'title', // 追加
         'content', // 追加
-        'user_id', // 追加
+        'member_id', // 追加
     ];
 
-    public function user()
+    public function member()
 {
-    return $this->belongsTo(User::class);
+    return $this->belongsTo(Member::class, 'member_id');
 }
 
 public function comments()
